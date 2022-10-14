@@ -32,7 +32,7 @@ type Product {
     title: String!
 
     "What the product costs - in cents"
-    price: Int!
+    price: Float!
 
     "When the product was created."
     created_at: DateTime!

@@ -20,7 +20,7 @@ class ProductFactory extends Factory
     {
         return [
             'title' => Str::headline(Lorem::words(rand(2, 7), true)),
-            'price' => fake()->numberBetween(100, 1000000)
+            'price' => fake()->numberBetween(100, 10000)
         ];
     }
 }
