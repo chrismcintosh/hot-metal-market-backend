@@ -13,6 +13,9 @@ use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
+
 
 class ProductResource extends Resource
 {
@@ -43,7 +46,21 @@ class ProductResource extends Resource
                                     ->decimalSeparator('.'),
                             ])
                             ->pattern('$money'),
-                    )
+                    ),
+
+                RichEditor::make('description')
+                    ->toolbarButtons([
+                        'blockquote',
+                        'bold',
+                        'bulletList',
+                        'h2',
+                        'h3',
+                        'italic',
+                        'link',
+                        'orderedList',
+                    ])->columnSpan(2),
+
+                SpatieMediaLibraryFileUpload::make('attachments')->columnSpan(2)
             ]);
     }
 
