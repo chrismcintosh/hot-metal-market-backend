@@ -20,6 +20,7 @@ return new class extends Migration
             $table->foreignIdFor(Product::class);
             $table->foreignIdFor(User::class);
             $table->unsignedBigInteger('quantity');
+            $table->decimal('checkout_price', 19, 2, false);
             $table->timestamps();
         });
     }

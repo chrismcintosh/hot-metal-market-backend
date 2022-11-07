@@ -16,11 +16,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/testing', function() {
-    $item = App\Models\User::find(1);
-    return $item->cartTotal();
-});
+Route::stripeWebhooks('/stripe-webhook');
 
+
+Route::post('/stripe/generatePaymentIntent', [App\Http\Controllers\StripeController::class, 'generatePaymentIntent']);
 
 /**
  * Auth Routes
@@ -30,6 +29,7 @@ Route::middleware(['auth:sanctum'])->group(function() {
     
     // Carts
     Route::get('/cart', [App\Http\Controllers\CartController::class, 'show']);
+    Route::post('/cart', [App\Http\Controllers\CartController::class, 'create']);
     Route::delete('/carts/{cart}', [App\Http\Controllers\CartController::class, 'destroy']);
 
     Route::get('/user', function (Request $request) {

@@ -48,19 +48,22 @@ class User extends Authenticatable
         return $this->belongsToMany(Product::class)->withPivot(
             'id',
             'quantity',
+            'checkout_price'
         );
     }
 
     public function cartTotal() {
         $prices = \DB::select("
-            SELECT quantity, product_id, price,
-            price*quantity  AS total_price
+            SELECT quantity, product_id, checkout_price, checkout_price*quantity  AS total_price
             FROM product_user
-            INNER JOIN products ON products.id = product_id
             WHERE user_id = :id", 
             ['id' => $this->id]
         );
 
         return collect($prices)->sum('total_price');
+    }
+
+    public function clearCart() {
+        $this->cart()->detach();
     }
 }

@@ -8,11 +8,24 @@ use App\Models\User;
 
 class CartController extends Controller
 {
+
+    public function create(Request $request) {
+        $cart = new Cart([
+            'product_id' => $request->input('product_id'),
+            'user_id' => $request->input('user_id'), 
+            'quantity' => $request->input('quantity') ?? 1,
+            'checkout_price' => $request->input('price')
+        ]);
+        if ($cart->save()) {
+            return response('Success', 200);
+        }
+        return response('Error: Could not add to cart', 500);
+    }
+
     public function show(Request $request) {
-        // Replace hard code with request value
-        \Log::debug($request->all());
-        $user = User::findorfail(1);
-        return json_encode($user->cart);
+        $user = User::findorfail($request->input('user'));
+        return response()
+            ->json(['items' => $user->cart, 'cartTotal' => $user->cartTotal()]);
     }
 
     /**
@@ -28,5 +41,10 @@ class CartController extends Controller
         };
 
         return response('Error', 500);
+    }
+
+    public function clear(Request $request) {
+        $user = $request->user();
+        $user->cart()->detach();
     }
 }

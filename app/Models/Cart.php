@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 class Cart extends Pivot
 {
     protected $table = 'product_user';
+    
     public $incrementing = true;
 
     public function user()

@@ -17,9 +17,4 @@ Route::get('/', function () {
     return ['Laravel' => app()->version()];
 });
 
-Route::get('/test', function () {
-    $product = App\Models\Product::find(1);
-    return $product;
-});
-
 require __DIR__ . '/auth.php';

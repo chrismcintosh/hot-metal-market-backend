@@ -18,6 +18,11 @@ class Product extends Model implements HasMedia
     protected $guarded = [];
 
     protected $appends = ['cmedia'];
+    
+    public function order()
+    {
+        return $this->belongsToMany(Order::class);
+    }
 
     // public function cmedia()
     // {
