@@ -15,7 +15,18 @@ class Order extends Model
     protected $guarded = [];
 
     /**
-     * Get the comments for the blog post.
+     * Prepare a date for array / JSON serialization.
+     *
+     * @param  \DateTimeInterface  $date
+     * @return string
+     */
+    protected function serializeDate($date)
+    {
+        return $date->format('m-d-Y H:i:s');
+    }
+
+    /**
+     * Get the products for this Order.
      */
     public function products()
     {
