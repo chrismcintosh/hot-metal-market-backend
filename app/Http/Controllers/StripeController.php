@@ -12,7 +12,6 @@ class StripeController extends Controller
 
         $cart = $request->input('cart');
         $cart = collect($cart['items'])->map(function($item) {
-            \Log::debug($item);
             return [
                 'product_id' => $item['pivot']['product_id'], 
                 'quantity' => $item['pivot']['quantity'],

@@ -20,6 +20,7 @@
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
         "mll-lab/laravel-graphiql": "^1.0",
+        "predis/predis": "^2.0",
         "spatie/laravel-medialibrary": "^10.0.0",
         "spatie/laravel-stripe-webhooks": "^3.2",
         "stripe/stripe-php": "^9.8"

@@ -22,9 +22,11 @@ return [
      * https://stripe.com/docs/api#event_types.
      */
     'jobs' => [
-        'payment_intent_created' => \App\Jobs\StripeWebhooks\PaymentIntentCreated::class
-        // 'source_chargeable' => \App\Jobs\StripeWebhooks\HandleChargeableSource::class,
-        // 'charge_failed' => \App\Jobs\StripeWebhooks\HandleFailedCharge::class,
+        'payment_intent_created' => \App\Jobs\StripeWebhooks\PaymentIntentCreated::class,
+        // 'charge_expired' => \App\Jobs\StripeWebhooks\StripeHandleChargeExpired::class,
+        // 'charge_failed' => \App\Jobs\StripeWebhooks\StripeHandleChargeFailed::class,
+        // 'charge_pending' => \App\Jobs\StripeWebhooks\ChargePending::class,
+        'charge_succeeded' => \App\Jobs\StripeWebhooks\ChargeSucceeded::class,
     ],
 
     /*

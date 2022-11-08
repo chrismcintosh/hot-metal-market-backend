@@ -73,9 +73,4 @@ class PaymentIntentCreated implements ShouldQueue
 
         return $cart;
     }
-
-    // private function clearUserCart() {
-    //     $cart = Cart::where('user_id', $this->user)->pluck('id')->toArray();
-    //     User::find($this->user)->cart()->detach($cart);
-    // }
 }
