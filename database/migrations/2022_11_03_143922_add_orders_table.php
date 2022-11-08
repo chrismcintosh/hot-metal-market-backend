@@ -16,10 +16,10 @@ return new class extends Migration
         /** Add Orders */
         Schema::create('orders', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('stripe_payment_intent_id');
-            $table->foreignId('user_id')->constrained();
-            $table->bigInteger('total')->unsigned();
-            $table->enum('status', ['created', 'succeeded', 'failed', 'canceled']);
+            $table->string('stripe_payment_intent_id')->nullable();
+            $table->foreignId('user_id')->nullable()->constrained();
+            $table->bigInteger('total')->nullable()->unsigned();
+            $table->enum('status', ['pi_generated', 'created', 'succeeded', 'failed', 'canceled']);
             $table->timestamps();
         });
 

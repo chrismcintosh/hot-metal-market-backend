@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Order;
 
 class StripeController extends Controller
 {
@@ -21,15 +22,31 @@ class StripeController extends Controller
 
         $key = env('STRIPE_SECRET_KEY');
         $stripe = new \Stripe\StripeClient($key);
-        
-        return json_encode($stripe->paymentIntents->create([
+
+        $order = new Order([
+            'status' => 'pi_generated',
+            'user_id' => $request->user()->id,
+            'total' => $amount
+        ]);
+
+        $order->save();
+
+        $pi = $stripe->paymentIntents->create([
             'amount' => $amount,
             'currency' => 'usd',
             'payment_method_types' => ['card'],
             'metadata' => [
                 'user' => $request->input('user'),
-                'cart' => $cart
+                'cart' => $cart,
+                'order_id'=> $order->id
             ]
-        ]));
+        ]);
+
+        $order->stripe_payment_intent_id = $pi->id;
+        $order->save();
+
+        \Log::debug(json_encode($pi));
+        
+        return json_encode($pi);
     }
 }

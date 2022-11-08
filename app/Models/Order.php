@@ -30,7 +30,19 @@ class Order extends Model
      */
     public function products()
     {
-        return $this->belongsToMany(Product::class);
+        return $this->belongsToMany(Product::class)->withPivot(
+            'product_cost',
+            'quantity'
+        );
+    }
+
+
+    /**
+     * Get the products for this Order.
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
 }

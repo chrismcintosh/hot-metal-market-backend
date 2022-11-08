@@ -16,11 +16,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/testing', function() {
-    $order = \App\Models\Order::firstWhere('stripe_payment_intent_id', 'pi_3M1bvbDsQ6PpbGwC0DBbA0Zu');
-    $order->status = "succeeded";
-    $order->save();
-});
+// Route::get('/testing', function() {
+//     $order = \App\Models\Order::firstWhere('stripe_payment_intent_id', 'pi_3M1bvbDsQ6PpbGwC0DBbA0Zu');
+//     $order->status = "succeeded";
+//     $order->save();
+// });
 
 
 Route::stripeWebhooks('/stripe-webhooks');
@@ -36,9 +36,14 @@ Route::middleware(['auth:sanctum'])->group(function() {
     Route::get('/cart', [App\Http\Controllers\CartController::class, 'show']);
     Route::post('/cart', [App\Http\Controllers\CartController::class, 'create']);
     Route::delete('/carts/{cart}', [App\Http\Controllers\CartController::class, 'destroy']);
+    Route::get('/cart/clear', [App\Http\Controllers\CartController::class, 'clear']);
 
     // Orders
     Route::get('/orders', [App\Http\Controllers\OrderController::class, 'index']);
+    Route::get('/orders/{order}', [App\Http\Controllers\OrderController::class, 'show']);
+    
+    // Stripe
+    Route::post('/stripe/generatePaymentIntent', [App\Http\Controllers\StripeController::class, 'generatePaymentIntent']);
 });
 
 
@@ -48,13 +53,9 @@ Route::middleware(['auth:sanctum'])->group(function() {
 
 // Products
 Route::get('/products', [App\Http\Controllers\ProductController::class, 'index']);
-
-// Stripe
-Route::post('/stripe/generatePaymentIntent', [App\Http\Controllers\StripeController::class, 'generatePaymentIntent']);
+Route::get('/products/{product}', [App\Http\Controllers\ProductController::class, 'show']);
 
 // User
 Route::get('/user', function (Request $request) {
     return $request->user();
 });
-
-Route::get('/cart/clear', [App\Http\Controllers\CartController::class, 'clear']);

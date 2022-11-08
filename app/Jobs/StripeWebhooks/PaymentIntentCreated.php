@@ -38,22 +38,18 @@ class PaymentIntentCreated implements ShouldQueue
      */
     public function handle()
     {
-        \Log::debug("handling payment intent created");
-        $order = $this->createOrder();
+        $order = $this->updateOrder();
     }
 
-    private function createOrder() {
-        $order = Order::create([
-            'stripe_payment_intent_id' => $this->webhookEvent->payload['data']['object']['id'],
-            'user_id' => $this->user,
-            'total' => $this->webhookEvent->payload['data']['object']['amount'],
-            'status' => 'created'
-        ]);
-
+    private function updateOrder() {
+        $order = Order::findOrFail($this->webhookEvent->payload['data']['object']['metadata']['order_id']);
+        
         if (!$order) {
-            throw new \Exception('Error creating order');
+            throw new \Exception('Error updating order');
         }
-
+        
+        $order->status = 'created';
+        $order->save();
         $order->products()->attach($this->ingestCart());
 
         return $order;
