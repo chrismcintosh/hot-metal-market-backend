@@ -15,7 +15,7 @@ return new class extends Migration
     {
         /** Add Orders */
         Schema::create('orders', function (Blueprint $table) {
-            $table->uuid('id');
+            $table->uuid('id')->primary();
             $table->string('stripe_payment_intent_id');
             $table->foreignId('user_id')->constrained();
             $table->bigInteger('total')->unsigned();
@@ -26,7 +26,7 @@ return new class extends Migration
         /** Add orders-products */
         Schema::create('order_product', function (Blueprint $table) {
             $table->id('id');
-            $table->string('order_id');
+            $table->foreignUuid('order_id')->references('id')->on('orders');
             $table->bigInteger('product_id');
             $table->bigInteger('product_cost')->unsigned();
             $table->bigInteger('quantity')->unsigned();
