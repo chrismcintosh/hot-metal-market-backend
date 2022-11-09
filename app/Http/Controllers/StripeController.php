@@ -44,8 +44,6 @@ class StripeController extends Controller
 
         $order->stripe_payment_intent_id = $pi->id;
         $order->save();
-
-        \Log::debug(json_encode($pi));
         
         return json_encode($pi);
     }

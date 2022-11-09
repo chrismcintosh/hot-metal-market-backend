@@ -38,9 +38,7 @@ class ChargePending implements ShouldQueue
      */
     public function handle()
     {
-        \Log::debug("handling pending");
         $order = Order::firstWhere('stripe_payment_intent_id', $this->webhookEvent->payload['data']['object']['id']);
-        \Log::debug(json_encode($order));
         $order->status = "pending";
         $order->save();
     }

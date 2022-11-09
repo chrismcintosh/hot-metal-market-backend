@@ -38,7 +38,6 @@ class ChargeSucceeded implements ShouldQueue
      */
     public function handle()
     {
-        \Log::debug("handling suceeded");
         $order = Order::firstWhere('stripe_payment_intent_id', $this->webhookEvent->payload['data']['object']['payment_intent']);
         $order->status = "succeeded";
         $order->save();
